@@ -11,7 +11,7 @@ if (strlen($_SESSION['id']==0)) {
 if(isset($_POST['Submit']))
 {
 $oldpassword=md5($_POST['oldpass']);
-$sql=mysqli_query($con,"SELECT password FROM admin where password='$oldpassword'");
+    $sql=mysqli_query($con,"SELECT password FROM admin where password='$oldpassword'");
 $num=mysqli_fetch_array($sql);
 if($num>0)
 {
@@ -125,6 +125,14 @@ return true;
                           <span>Manage Users</span>
                       </a>
                    
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="manage-events.php" >
+                          <i class="fa fa-users"></i>
+                          <span>Manage Events</span>
+                      </a>
+
                   </li>
               
                  

@@ -85,7 +85,9 @@ if (strlen($_SESSION['id']==0)) {
                               </tr>
                               </thead>
                               <tbody>
-                              <?php $ret=mysqli_query($con,"select * from users");
+                              <?php
+                              $con='';
+                              $ret=mysqli_query($con,"select * from users");
 							  $cnt=1;
 							  while($row=mysqli_fetch_array($ret))
 							  {?>

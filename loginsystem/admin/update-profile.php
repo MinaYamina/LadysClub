@@ -13,6 +13,7 @@ if(isset($_POST['Submit']))
 	$lname=$_POST['lname'];
 	$contact=$_POST['contact'];
   $uid=intval($_GET['uid']);
+  $con='';
 $query=mysqli_query($con,"update users set fname='$fname' ,lname='$lname' , contactno='$contact' where id='$uid'");
 $_SESSION['msg']="Profile Updated successfully";
 }
@@ -74,6 +75,14 @@ $_SESSION['msg']="Profile Updated successfully";
                           <span>Manage Users</span>
                       </a>
                    
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="manage-events.php" >
+                          <i class="fa fa-users"></i>
+                          <span>Manage Events</span>
+                      </a>
+
                   </li>
               
                  
