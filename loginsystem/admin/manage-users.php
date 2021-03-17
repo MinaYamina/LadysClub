@@ -73,6 +73,14 @@ echo "<script>alert('Data deleted');</script>";
                       </a>
                    
                   </li>
+
+                  <li class="sub-menu">
+                      <a href="manage-events.php" >
+                          <i class="fa fa-users"></i>
+                          <span>Manage Events</span>
+                      </a>
+
+                  </li>
               
                  
               </ul>
