@@ -7,11 +7,11 @@ if (strlen($_SESSION['id']==0)) {
 } else{
 
 // for deleting event
-if(isset($_GET['id']))
+if(isset($_GET['eid']))
 {
-    $adminid=$_GET['id'];
+    $eventid=$_GET['eid'];
     $con = '';
-    $msg=mysqli_query($con,"delete from events where id='$adminid'");
+    $msg=mysqli_query($con,"delete from events where eid='$eventid'");
     if($msg)
     {
         echo "<script>alert('Data deleted');</script>";
@@ -122,9 +122,9 @@ if(isset($_GET['id']))
                                     <td><?php echo $row['Beschreibung'];?></td>
                                     <td>
 
-                                        <a href="update-events.php?eid=<?php echo $row['id'];?>">
+                                        <a href="update-events.php?eid=<?php echo $row['eid'];?>">
                                             <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button></a>
-                                        <a href="manage-events.php?id=<?php echo $row['id'];?>">
+                                        <a href="manage-events.php?eid=<?php echo $row['eid'];?>">
                                             <button class="btn btn-danger btn-xs" onClick="return confirm('Do you really want to delete');"><i class="fa fa-trash-o "></i></button></a>
                                     </td>
                                 </tr>

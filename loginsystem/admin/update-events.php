@@ -12,8 +12,10 @@ if (strlen($_SESSION['id']==0)) {
         $Event=$_POST['Event'];
         $Ort=$_POST['Ort'];
         $Datum=$_POST['Datum'];
-        $eid=intval($_GET['id']);
-        $query=mysqli_query($con,"update events set Event='$Event' ,Ort='$Ort' , Datum='$Datum' where id='$eid'");
+        $eid=intval($_GET['eid']);
+        $Uhrzeit=$_POST['Uhrzeit'];
+        $Beschreibung=$_POST['Beschreibung'];
+        $query=mysqli_query($con,"update events set Event='$Event' ,Ort='$Ort' , Datum='$Datum', Uhrzeit='$Uhrzeit', Beschreibung='$Beschreibung' where eid='$eid'");
         $_SESSION['msg']="Event Updated successfully";
     }
     ?>
@@ -88,7 +90,7 @@ if (strlen($_SESSION['id']==0)) {
                 </ul>
             </div>
         </aside>
-        <?php $ret=mysqli_query($con,"select * from events where id='".$_GET['eid']."'");
+        <?php $ret=mysqli_query($con,"select * from events where eid='".$_GET['eid']."'");
         while($row=mysqli_fetch_array($ret))
 
         {?>
@@ -122,7 +124,7 @@ if (strlen($_SESSION['id']==0)) {
                                 <div class="form-group">
                                     <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Date </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="Datum" value="<?php echo $row['Datum'];?>" readonly >
+                                        <input type="text" class="form-control" name="Datum" value="<?php echo $row['Datum'];?>" >
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -134,7 +136,7 @@ if (strlen($_SESSION['id']==0)) {
                                 <div class="form-group">
                                     <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Description </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="Beschreibung" value="<?php echo $row['Beschreibung'];?>" readonly >
+                                        <input type="text" class="form-control" name="Beschreibung" value="<?php echo $row['Beschreibung'];?>" >
                                     </div>
                                 </div>
                                 <div style="margin-left:100px;">
