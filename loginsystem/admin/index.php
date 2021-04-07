@@ -5,14 +5,22 @@ include("dbconnection.php");
 if(isset($_POST['login']))
 {
   $adminusername=$_POST['username'];
-  $pass=md5($_POST['password']);
-$ret=mysqli_query($con,"SELECT * FROM admin WHERE username='$adminusername' and password='$pass'");
-$num=mysqli_fetch_array($ret);
-if($num>0)
+  $pass=$_POST['password'];
+  $ret=$con->prepare("SELECT * FROM admin WHERE username= ? and password= ?");
+  $ret->bind_param("ss",$adminusername,$pass);
+  $adminusername=mysqli_real_escape_string($con,$adminusername);
+  $pass=mysqli_real_escape_string($con,$pass);
+  $pass=hash("md5",$pass, false);
+
+  $ret->execute();
+  $result=$ret->get_result();
+  $row = $result->fetch_assoc();
+
+if($row!=null)
 {
 $extra="manage-users.php";
 $_SESSION['login']=$_POST['username'];
-$_SESSION['id']=$num['id'];
+$_SESSION['id']=$row['id'];
 echo "<script>window.location.href='".$extra."'</script>";
 exit();
 }

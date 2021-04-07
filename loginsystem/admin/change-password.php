@@ -10,14 +10,24 @@ if (strlen($_SESSION['id']==0)) {
  // for  password change   
 if(isset($_POST['Submit']))
 {
-$oldpassword=md5($_POST['oldpass']);
-    $sql=mysqli_query($con,"SELECT password FROM admin where password='$oldpassword'");
-$num=mysqli_fetch_array($sql);
-if($num>0)
+
+$ret=$con->prepare("SELECT password FROM admin where password=?");
+$ret->bind_param("s",$oldpassword);
+$oldpassword=hash('md5',($_POST['oldpass']),false);
+$ret->execute();
+
+    $result=$ret->get_result();
+    $row = $result->fetch_assoc();
+
+if($row!=null)
 {
 $adminid=$_SESSION['id'];
-$newpass=md5($_POST['newpass']);
- $ret=mysqli_query($con,"update admin set password='$newpass' where id='$adminid'");
+$newpass=$_POST['newpass'];
+$ret=$con->prepare("update admin set password=? where id=?");
+$ret->bind_param("ss",$newpass,$adminid);
+$newpass=hash('md5',$newpass,false);
+$ret->execute();
+
 $_SESSION['msg']="Password Changed Successfully !!";
 //header('location:user.php');
 }
@@ -109,28 +119,28 @@ return true;
           <div id="sidebar"  class="nav-collapse ">
               <ul class="sidebar-menu" id="nav-accordion">
               
-              	  <p class="centered"><a href="#"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+              	  <p class="centered"><a href="#"><img src="assets/img/volleyball.png" class="img-circle" width="60"></a></p>
               	  <h5 class="centered"><?php echo $_SESSION['login'];?></h5>
-              	  	
+
                   <li class="mt">
                       <a href="change-password.php">
                           <i class="fa fa-file"></i>
-                          <span>Change Password</span>
+                          <span>Passwort ändern</span>
                       </a>
                   </li>
 
                   <li class="sub-menu">
                       <a href="manage-users.php" >
                           <i class="fa fa-users"></i>
-                          <span>Manage Users</span>
+                          <span>Mitglieder bearbeiten</span>
                       </a>
-                   
+
                   </li>
 
                   <li class="sub-menu">
                       <a href="manage-events.php" >
                           <i class="fa fa-users"></i>
-                          <span>Manage Events</span>
+                          <span>Events bearbeiten</span>
                       </a>
 
                   </li>
@@ -141,7 +151,7 @@ return true;
       </aside>
       <section id="main-content">
           <section class="wrapper">
-          	<h3><i class="fa fa-angle-right"></i> Change Password </h3>
+          	<h3><i class="fa fa-angle-right"></i> Passwort ändern </h3>
 				<div class="row">
 				
                   
@@ -151,27 +161,27 @@ return true;
                            <form class="form-horizontal style-form" name="form1" method="post" action="" onSubmit="return valid();">
                            <p style="color:#F00"><?php echo $_SESSION['msg'];?><?php echo $_SESSION['msg']="";?></p>
                           <div class="form-group">
-                              <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Old Password</label>
+                              <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Altes Passwort</label>
                               <div class="col-sm-10">
                                   <input type="password" class="form-control" name="oldpass" value="" >
                               </div>
                           </div>
                           
                               <div class="form-group">
-                              <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">New Password</label>
+                              <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Neues Passwort</label>
                               <div class="col-sm-10">
                                   <input type="password" class="form-control" name="newpass" value="" >
                               </div>
                           </div>
                           
                               <div class="form-group">
-                              <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Confirm Password</label>
+                              <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Passwort bestätigen</label>
                               <div class="col-sm-10">
                                   <input type="password" class="form-control" name="confirmpassword" value="" >
                               </div>
                           </div>
                           <div style="margin-left:100px;">
-                          <input type="submit" name="Submit" value="Change" class="btn btn-theme"></div>
+                          <input type="submit" name="Submit" value="Ändern" class="btn btn-theme"></div>
                           </form>
                       </div>
                   </div>

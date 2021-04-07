@@ -11,8 +11,14 @@ if(isset($_GET['eid']))
 {
     $eventid=$_GET['eid'];
     $con = '';
-    $msg=mysqli_query($con,"delete from events where eid='$eventid'");
-    if($msg)
+    $ret=$con->prepare("delete from events where eid=?");
+    $ret->bind_param("s",$eventid);
+    $eventid=$_GET['eid'];
+    $ret->execute();
+    $result=$ret->get_result();
+    $row = $result->fetch_assoc();
+
+    if($row)
     {
         echo "<script>alert('Data deleted');</script>";
     }
@@ -57,20 +63,20 @@ if(isset($_GET['eid']))
         <div id="sidebar"  class="nav-collapse ">
             <ul class="sidebar-menu" id="nav-accordion">
 
-                <p class="centered"><a href="#"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+                <p class="centered"><a href="#"><img src="assets/img/volleyball.png" class="img-circle" width="60"></a></p>
                 <h5 class="centered"><?php echo $_SESSION['login'];?></h5>
 
                 <li class="mt">
                     <a href="change-password.php">
                         <i class="fa fa-file"></i>
-                        <span>Change Password</span>
+                        <span>Passwort ändern</span>
                     </a>
                 </li>
 
                 <li class="sub-menu">
                     <a href="manage-users.php" >
                         <i class="fa fa-users"></i>
-                        <span>Manage Users</span>
+                        <span>Mitglieder bearbeiten</span>
                     </a>
 
                 </li>
@@ -78,7 +84,7 @@ if(isset($_GET['eid']))
                 <li class="sub-menu">
                     <a href="manage-events.php" >
                         <i class="fa fa-users"></i>
-                        <span>Manage Events</span>
+                        <span>Events bearbeiten</span>
                     </a>
 
                 </li>
@@ -109,7 +115,10 @@ if(isset($_GET['eid']))
                             </tr>
                             </thead>
                             <tbody>
-                            <?php $ret=mysqli_query($con,"select * from events");
+                            <?php
+
+                            $ret=mysqli_query($con,"select * from events");
+
                             $cnt=1;
                             while($row=mysqli_fetch_array($ret))
                             {?>
@@ -133,6 +142,10 @@ if(isset($_GET['eid']))
                             </tbody>
                         </table>
                     </div>
+                    <br>
+                    <a href="add-event.php">
+                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                    </a>
                 </div>
             </div>
         </section>

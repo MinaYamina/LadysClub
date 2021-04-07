@@ -9,24 +9,13 @@ if (strlen($_SESSION['id']==0)) {
 // for updating user info
     if(isset($_POST['Submit']))
     {
-        $event=$_POST['Event'];
-        $ort=$_POST['Ort'];
-        $datum=$_POST['Datum'];
-        $eid=intval($_GET['eid']);
-        $uhrzeit=$_POST['Uhrzeit'];
-        $beschreibung=$_POST['Beschreibung'];
-        $ret=$con->prepare("update events set Event=? ,Ort=? , Datum=?, Uhrzeit=?, Beschreibung=? where eid=?");
-        $ret->bind_param("ssssss",$event, $ort, $datum, $uhrzeit, $beschreibung, $eid);
-        $event=mysqli_real_escape_string($con,$event);
-        $ort=mysqli_real_escape_string($con,$ort);
-        $datum=mysqli_real_escape_string($con,$datum);
-        $eid=mysqli_real_escape_string($con,$eid);
-        $uhrzeit=mysqli_real_escape_string($con,$uhrzeit);
-        $beschreibung=mysqli_real_escape_string($con,$beschreibung);
-        $ret->execute();
-        $result=$ret->get_result();
-        $row = $result->fetch_assoc();
-        $_SESSION['msg']="Event Updated successfully";
+        $fname=$_POST['fname'];
+        $lname=$_POST['lname'];
+        $contact=$_POST['contact'];
+        $email=$_POST['email'];
+        $uid=intval($_GET['uid']);
+        $query=mysqli_query($con,"insert into users (fname, lname, contactno, email) values ('$fname', '$lname', '$contact', '$email' )");
+        $_SESSION['msg']="Profile Updated successfully";
     }
     ?>
 
@@ -70,20 +59,20 @@ if (strlen($_SESSION['id']==0)) {
             <div id="sidebar"  class="nav-collapse ">
                 <ul class="sidebar-menu" id="nav-accordion">
 
-                    <p class="centered"><a href="#"><img src="assets/img/volleyball.png" class="img-circle" width="60"></a></p>
+                    <p class="centered"><a href="#"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
                     <h5 class="centered"><?php echo $_SESSION['login'];?></h5>
 
                     <li class="mt">
                         <a href="change-password.php">
                             <i class="fa fa-file"></i>
-                            <span>Passwort ändern</span>
+                            <span>Change Password</span>
                         </a>
                     </li>
 
                     <li class="sub-menu">
                         <a href="manage-users.php" >
                             <i class="fa fa-users"></i>
-                            <span>Mitglieder bearbeiten</span>
+                            <span>Manage Users</span>
                         </a>
 
                     </li>
@@ -91,7 +80,7 @@ if (strlen($_SESSION['id']==0)) {
                     <li class="sub-menu">
                         <a href="manage-events.php" >
                             <i class="fa fa-users"></i>
-                            <span>Events bearbeiten</span>
+                            <span>Manage Events</span>
                         </a>
 
                     </li>
@@ -100,21 +89,10 @@ if (strlen($_SESSION['id']==0)) {
                 </ul>
             </div>
         </aside>
-        <?php
-        $eid=$_GET['eid'];
-        $ret=$con->prepare("select * from events where eid=?");
-        $ret->bind_param("s",$eid);
-        $eid=$_GET['eid'];
-        $ret->execute();
-        $result=$ret->get_result();
-        $row = $result->fetch_assoc();
 
-        if($row)
-
-        {?>
         <section id="main-content">
             <section class="wrapper">
-                <h3><i class="fa fa-angle-right"></i> <?php echo $row['Event'];?>'s Information</h3>
+                <h3><i class="fa fa-angle-right"></i>Neues Mitglied hinzufügen</h3>
 
                 <div class="row">
 
@@ -126,45 +104,39 @@ if (strlen($_SESSION['id']==0)) {
                             <form class="form-horizontal style-form" name="form1" method="post" action="" onSubmit="return valid();">
                                 <p style="color:#F00"><?php echo $_SESSION['msg'];?><?php echo $_SESSION['msg']="";?></p>
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Event </label>
+                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">First Name </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="Event" value="<?php echo $row['Event'];?>" >
+                                        <input type="text" class="form-control" name="fname" value="" >
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Ort</label>
+                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Last Ename</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="Ort" value="<?php echo $row['Ort'];?>" >
+                                        <input type="text" class="form-control" name="lname" value="" >
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Datum </label>
+                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Email </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="Datum" value="<?php echo $row['Datum'];?>" >
+                                        <input type="text" class="form-control" name="email" value="" >
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Uhrzeit </label>
+                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Contact no. </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="Uhrzeit" value="<?php echo $row['Uhrzeit'];?>" >
+                                        <input type="text" class="form-control" name="contact" value="" >
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Beschreibung </label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="Beschreibung" value="<?php echo $row['Beschreibung'];?>" >
-                                    </div>
-                                </div>
-                                <div style="margin-left:100px;">
-                                    <input type="submit" name="Submit" value="Update" class="btn btn-theme"></div>
+                                <div style="margin-left:25px;">
+                                    <input type="submit" name="Submit" value="Add" class="btn btn-theme"></div>
                             </form>
                         </div>
                     </div>
                 </div>
             </section>
-            <?php } ?>
+
         </section></section>
     <script src="assets/js/jquery.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
