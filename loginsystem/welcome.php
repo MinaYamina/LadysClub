@@ -31,15 +31,12 @@ if (strlen($_SESSION['id'] == 0)) {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Welcome !</a>
+            <a class="navbar-brand" href="#">Willkommen !</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
                     <a href="#"><?php echo $_SESSION['name']; ?></a>
-                </li>
-                <li>
-                    <a href="page.php">Page</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout</a>
@@ -79,12 +76,12 @@ if (strlen($_SESSION['id'] == 0)) {
                         <hr>
                         <thead>
                         <tr>
-                            <th>Sno.</th>
-                            <th class="hidden-phone">First Name</th>
-                            <th> Last Name</th>
-                            <th> Email Id</th>
-                            <th>Contact no.</th>
-                            <th>Reg. Date</th>
+                            <th>Mitgliedernummer</th>
+                            <th class="hidden-phone">Vorname</th>
+                            <th> Nachname</th>
+                            <th> Email</th>
+                            <th>Kontaktnummer</th>
+                            <th>Erstelldatum</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -124,11 +121,11 @@ if (strlen($_SESSION['id'] == 0)) {
                         <hr>
                         <thead>
                         <tr>
-                            <th class="hidden-phone">Date</th>
-                            <th> Time</th>
-                            <th> Title</th>
-                            <th> Description</th>
-                            <th> Additional Information</th>
+                            <th class="hidden-phone">Datum</th>
+                            <th> Zeit</th>
+                            <th> Titel</th>
+                            <th> Beschreibung</th>
+                            <th> Zusätzliche Informationen</th>
                         </tr>
                         </thead>
                         <tbody>
