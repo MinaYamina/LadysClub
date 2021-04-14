@@ -12,18 +12,18 @@ if (strlen($_SESSION['id']==0)) {
         $event=$_POST['Event'];
         $ort=$_POST['Ort'];
         $datum=$_POST['Datum'];
-        $eid=intval($_GET['eid']);
         $uhrzeit=$_POST['Uhrzeit'];
         $beschreibung=$_POST['Beschreibung'];
-        $query=mysqli_query($con,"insert into events (Event, Ort, Datum, eid, Uhrzeit, Beschreibung ) values (?,?,?,?,?,?)");
-        $ret->bind_param("ssssss", $event, $ort, $datum, $eid, $uhrzeit, $beschreibung);
+
         $event=mysqli_real_escape_string($con,$event);
         $ort=mysqli_real_escape_string($con,$ort);
         $datum=mysqli_real_escape_string($con,$datum);
-        $eid=mysqli_real_escape_string($con,$eid);
         $uhrzeit=mysqli_real_escape_string($con,$uhrzeit);
         $beschreibung=mysqli_real_escape_string($con,$beschreibung);
 
+        $ret=$con -> prepare("insert into events (Event, Ort, Datum, Uhrzeit, Beschreibung) values (?,?,?,?,?)");
+
+        $ret->bind_param("sssss", $event, $ort, $datum, $uhrzeit, $beschreibung);
         $ret->execute();
         $_SESSION['msg']="Profile Updated successfully";
     }

@@ -25,7 +25,7 @@ if (strlen($_SESSION['id']==0)) {
         $beschreibung=mysqli_real_escape_string($con,$beschreibung);
         $ret->execute();
         $result=$ret->get_result();
-        $row = $result->fetch_assoc();
+
         $_SESSION['msg']="Event Updated successfully";
     }
     ?>

@@ -121,26 +121,29 @@ if (strlen($_SESSION['id'] == 0)) {
                         <hr>
                         <thead>
                         <tr>
-                            <th class="hidden-phone">Datum</th>
-                            <th> Zeit</th>
+                            <th> #</th>
                             <th> Titel</th>
+                            <th>Datum</th>
+                            <th> Zeit</th>
+                            <th> Ort</th>
                             <th> Beschreibung</th>
-                            <th> Zusätzliche Informationen</th>
+
                         </tr>
                         </thead>
                         <tbody>
                         <?php
-                        $ret = mysqli_query($con, "select * from users");
+                        $ret = mysqli_query($con, "select * from events");
                         $cnt = 1;
                         while ($row = mysqli_fetch_array($ret)) {
                             ?>
                             <tr>
                                 <td><?php echo $cnt; ?></td>
-<!--                                <td>--><?php //echo $row['date']; ?><!--</td>-->
-<!--                                <td>--><?php //echo $row['time']; ?><!--</td>-->
-<!--                                <td>--><?php //echo $row['title']; ?><!--</td>-->
-<!--                                <td>--><?php //echo $row['description']; ?><!--</td>-->
-<!--                                <td>--><?php //echo $row['addinfo']; ?><!--</td>-->
+                                <td><?php echo $row['Event']; ?></td>
+                                <td><?php echo $row['Datum']; ?></td>
+                                <td><?php echo $row['Uhrzeit']; ?></td>
+                                <td><?php echo $row['Ort']; ?></td>
+                               <td><?php echo $row['Beschreibung']; ?></td>
+
                             </tr>
                             <?php $cnt = $cnt + 1;
                         } ?>

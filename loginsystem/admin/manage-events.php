@@ -10,18 +10,13 @@ if (strlen($_SESSION['id']==0)) {
 if(isset($_GET['eid']))
 {
     $eventid=$_GET['eid'];
-    $con = '';
     $ret=$con->prepare("delete from events where eid=?");
     $ret->bind_param("s",$eventid);
-    $eventid=$_GET['eid'];
     $ret->execute();
     $result=$ret->get_result();
-    $row = $result->fetch_assoc();
 
-    if($row)
-    {
-        echo "<script>alert('Data deleted');</script>";
-    }
+
+
 }
 ?><!DOCTYPE html>
 <html lang="en">
@@ -32,7 +27,7 @@ if(isset($_GET['eid']))
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Admin | Manage Events</title>
+    <title>Admin | Events bearbeiten</title>
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet">
@@ -94,7 +89,7 @@ if(isset($_GET['eid']))
     </aside>
     <section id="main-content">
         <section class="wrapper">
-            <h3><i class="fa fa-angle-right"></i> Manage Events</h3>
+            <h3><i class="fa fa-angle-right"></i> Events bearbeiten</h3>
             <div class="row">
 
 
@@ -102,16 +97,16 @@ if(isset($_GET['eid']))
                 <div class="col-md-12">
                     <div class="content-panel">
                         <table class="table table-striped table-advance table-hover">
-                            <h4><i class="fa fa-angle-right"></i> All User Details </h4>
+                            <h4><i class="fa fa-angle-right"></i> Alle Eventangaben </h4>
                             <hr>
                             <thead>
                             <tr>
-                                <th>No.</th>
-                                <th class="hidden-phone">Event</th>
-                                <th>Place</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Description</th>
+                                <th>#</th>
+                                <th>Event</th>
+                                <th>Ort</th>
+                                <th>Datum</th>
+                                <th>Zeit</th>
+                                <th>Beschreibung</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -134,7 +129,7 @@ if(isset($_GET['eid']))
                                         <a href="update-events.php?eid=<?php echo $row['eid'];?>">
                                             <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button></a>
                                         <a href="manage-events.php?eid=<?php echo $row['eid'];?>">
-                                            <button class="btn btn-danger btn-xs" onClick="return confirm('Do you really want to delete');"><i class="fa fa-trash-o "></i></button></a>
+                                            <button class="btn btn-danger btn-xs" onClick="return confirm('Möchten Sie dieses Ereignis wirklich löschen?');"><i class="fa fa-trash-o "></i></button></a>
                                     </td>
                                 </tr>
                                 <?php $cnt=$cnt+1; }?>

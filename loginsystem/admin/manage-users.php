@@ -14,11 +14,7 @@ if (isset($_GET['id'])) {
     $adminid = $_GET['id'];
     $ret->execute();
     $result=$ret->get_result();
-    $row = $result->fetch_assoc();
 
-    if ($row) {
-        echo "<script>alert('Data deleted');</script>";
-    }
 }
 ?><!DOCTYPE html>
 <html lang="en">
@@ -55,6 +51,8 @@ if (isset($_GET['id'])) {
             </ul>
         </div>
     </header>
+    <!-- navigation bar -->
+
     <aside>
         <div id="sidebar" class="nav-collapse ">
             <ul class="sidebar-menu" id="nav-accordion">
@@ -91,23 +89,23 @@ if (isset($_GET['id'])) {
     </aside>
     <section id="main-content">
         <section class="wrapper">
-            <h3><i class="fa fa-angle-right"></i> Manage Users</h3>
+            <h3><i class="fa fa-angle-right"></i> Mitglieder bearbeiten</h3>
             <div class="row">
 
 
                 <div class="col-md-12">
                     <div class="content-panel">
                         <table class="table table-striped table-advance table-hover">
-                            <h4><i class="fa fa-angle-right"></i> All User Details </h4>
+                            <h4><i class="fa fa-angle-right"></i> Benutzerdetails </h4>
                             <hr>
                             <thead>
                             <tr>
-                                <th>Sno.</th>
+                                <th>#</th>
                                 <th class="hidden-phone"> Vorname</th>
                                 <th> Nachname</th>
                                 <th> Email</th>
-                                <th>Contact no.</th>
-                                <th>Reg. Date</th>
+                                <th>Kontaktnummer</th>
+                                <th>Registrierungsdatum</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -130,7 +128,7 @@ if (isset($_GET['id'])) {
                                         </a>
                                         <a href="manage-users.php?id=<?php echo $row['id']; ?>">
                                             <button class="btn btn-danger btn-xs"
-                                                    onClick="return confirm('Do you really want to delete');"><i
+                                                    onClick="return confirm('Möchten Sie diesen Nutzer wirklich löschen?');"><i
                                                         class="fa fa-trash-o "></i></button>
                                         </a>
                                     </td>

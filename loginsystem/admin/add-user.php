@@ -6,15 +6,17 @@ if (strlen($_SESSION['id']==0)) {
     header('location:logout.php');
 } else{
 
-// for updating user info
+// for adding user info
     if(isset($_POST['Submit']))
     {
         $fname=$_POST['fname'];
         $lname=$_POST['lname'];
         $contact=$_POST['contact'];
         $email=$_POST['email'];
-        $uid=intval($_GET['uid']);
-        $query=mysqli_query($con,"insert into users (fname, lname, contactno, email) values ('$fname', '$lname', '$contact', '$email' )");
+        $ret=$con -> prepare("insert into users (fname, lname, contactno, email) values (?,?,?,?)");
+        $ret->bind_param("ssss", $fname, $lname, $contact, $email);
+        $ret->execute();
+
         $_SESSION['msg']="Profile Updated successfully";
     }
     ?>
@@ -59,7 +61,7 @@ if (strlen($_SESSION['id']==0)) {
             <div id="sidebar"  class="nav-collapse ">
                 <ul class="sidebar-menu" id="nav-accordion">
 
-                    <p class="centered"><a href="#"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+                    <p class="centered"><a href="#"><img src="assets/img/volleyball.png" class="img-circle" width="60"></a></p>
                     <h5 class="centered"><?php echo $_SESSION['login'];?></h5>
 
                     <li class="mt">
@@ -104,14 +106,14 @@ if (strlen($_SESSION['id']==0)) {
                             <form class="form-horizontal style-form" name="form1" method="post" action="" onSubmit="return valid();">
                                 <p style="color:#F00"><?php echo $_SESSION['msg'];?><?php echo $_SESSION['msg']="";?></p>
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">First Name </label>
+                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Vorname </label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="fname" value="" >
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Last Ename</label>
+                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Nachname</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="lname" value="" >
                                     </div>
@@ -124,7 +126,7 @@ if (strlen($_SESSION['id']==0)) {
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Contact no. </label>
+                                    <label class="col-sm-2 col-sm-2 control-label" style="padding-left:40px;">Kontaktnummer </label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="contact" value="" >
                                     </div>
